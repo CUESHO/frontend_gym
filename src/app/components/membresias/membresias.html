@@ -1,1 +1,65 @@
-<p>membresias works!</p>
+<div class="contenedor">
+  <h2>Gestión de Membresías</h2>
+
+  <!-- Formulario -->
+  <div class="tarjeta-formulario">
+    <!-- Cambiamos el título dinámicamente -->
+    <h3>{{ editando ? 'Editar Membresía' : 'Nueva Membresía' }}</h3>
+    
+    <form (ngSubmit)="guardarMembresia()">
+      <div class="grupo-input">
+        <label>Nombre del Plan:</label>
+        <input type="text" name="nombre" [(ngModel)]="nuevaMembresia.nombre" required placeholder="Ej. VIP, Básico">
+      </div>
+      
+      <div class="grupo-input">
+        <label>Precio ($):</label>
+        <input type="number" name="precio" [(ngModel)]="nuevaMembresia.precio" required>
+      </div>
+
+      <div class="grupo-input">
+        <label>Duración (Días):</label>
+        <input type="number" name="duracion" [(ngModel)]="nuevaMembresia.duracion_dias" required>
+      </div>
+
+      <!-- Cambiamos el texto del botón dinámicamente -->
+      <button type="submit" class="btn-guardar">
+        {{ editando ? 'Actualizar Plan' : 'Registrar Plan' }}
+      </button>
+
+      <!-- Botón para cancelar la edición si nos arrepentimos -->
+      <button type="button" class="btn-eliminar" *ngIf="editando" (click)="cancelarEdicion()" style="margin-top: 10px; width: 100%;">
+        Cancelar Edición
+      </button>
+    </form>
+  </div>
+
+  <!-- Tabla -->
+  <div class="tarjeta-tabla">
+    <h3>Planes Existentes</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Duración</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let plan of membresias">
+          <td>{{ plan.id }}</td>
+          <td>{{ plan.nombre }}</td>
+          <td>${{ plan.precio }}</td>
+          <td>{{ plan.duracion_dias }} días</td>
+          <td>
+            <!-- Conectamos los botones a los métodos TS -->
+            <button class="btn-editar" (click)="cargarParaEditar(plan)">Editar</button>
+            <button class="btn-eliminar" (click)="eliminarMembresia(plan.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
