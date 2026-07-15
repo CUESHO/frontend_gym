@@ -1,0 +1,77 @@
+.contenedor {
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #e0e0e0;
+  background-color: #121212;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+h2, h3 {
+  color: #ff3b3b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tarjeta-formulario, .tarjeta-tabla {
+  background-color: #1e1e1e;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #ff3b3b;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.grupo-input {
+  margin-bottom: 15px;
+}
+
+.grupo-input label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.grupo-input input {
+  width: 100%;
+  padding: 10px;
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+  color: white;
+  border-radius: 4px;
+}
+
+.grupo-input input:focus {
+  outline: none;
+  border-color: #ff3b3b;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.btn-guardar { background-color: #ff3b3b; color: white; width: 100%; }
+.btn-guardar:hover { background-color: #d32f2f; }
+
+.btn-editar { background-color: #4caf50; color: white; margin-right: 5px; }
+.btn-eliminar { background-color: #f44336; color: white; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #333;
+}
+
+th { background-color: #2a2a2a; color: #ff3b3b; }

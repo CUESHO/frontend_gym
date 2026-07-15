@@ -1,1 +1,54 @@
-<p>areas works!</p>
+<div class="contenedor">
+  <h2>Gestión de Áreas del Gimnasio</h2>
+
+  <!-- Formulario -->
+  <div class="tarjeta-formulario">
+    <h3>{{ editando ? 'Editar Área' : 'Nueva Área' }}</h3>
+    
+    <form (ngSubmit)="guardarArea()">
+      <div class="grupo-input">
+        <label>Nombre del Área:</label>
+        <input type="text" name="nombre" [(ngModel)]="nuevaArea.nombre" required placeholder="Ej. Pesas, Cardio, Yoga">
+      </div>
+      
+      <div class="grupo-input">
+        <label>Descripción:</label>
+        <input type="text" name="descripcion" [(ngModel)]="nuevaArea.descripcion" required placeholder="Detalles de los equipos">
+      </div>
+
+      <button type="submit" class="btn-guardar">
+        {{ editando ? 'Actualizar Área' : 'Registrar Área' }}
+      </button>
+
+      <button type="button" class="btn-eliminar" *ngIf="editando" (click)="cancelarEdicion()" style="margin-top: 10px; width: 100%;">
+        Cancelar Edición
+      </button>
+    </form>
+  </div>
+
+  <!-- Tabla -->
+  <div class="tarjeta-tabla">
+    <h3>Áreas Existentes</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let area of areas">
+          <td>{{ area.id }}</td>
+          <td>{{ area.nombre }}</td>
+          <td>{{ area.descripcion }}</td>
+          <td>
+            <button class="btn-editar" (click)="cargarParaEditar(area)">Editar</button>
+            <button class="btn-eliminar" (click)="eliminarArea(area.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
