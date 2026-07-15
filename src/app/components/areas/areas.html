@@ -1,54 +1,60 @@
-<div class="contenedor">
-  <h2>Gestión de Áreas del Gimnasio</h2>
+<div class="tabla-contenedor">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h2>🏢 Gestión de Áreas del Gimnasio</h2>
+    <span style="color: var(--texto-secundario);">Total: {{ areas.length }}</span>
+  </div>
 
-  <!-- Formulario -->
-  <div class="tarjeta-formulario">
-    <h3>{{ editando ? 'Editar Área' : 'Nueva Área' }}</h3>
+  <!-- Formulario Dinámico (Sirve para Crear y Editar) -->
+  <form (ngSubmit)="guardarArea()" style="display: flex; gap: 15px; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 8px; border: 1px solid var(--borde); margin-bottom: 30px; align-items: flex-end;">
+    <div style="display: flex; flex-direction: column; flex: 1; gap: 5px;">
+      <label style="color: var(--texto-secundario); font-size: 0.85rem;">Nombre del Área</label>
+      <input type="text" name="nombre" [(ngModel)]="nuevaArea.nombre" required placeholder="Ej. Zona de Cardio" style="background: var(--bg-principal); border: 1px solid var(--borde); padding: 10px; border-radius: 6px; color: white;">
+    </div>
     
-    <form (ngSubmit)="guardarArea()">
-      <div class="grupo-input">
-        <label>Nombre del Área:</label>
-        <input type="text" name="nombre" [(ngModel)]="nuevaArea.nombre" required placeholder="Ej. Pesas, Cardio, Yoga">
-      </div>
-      
-      <div class="grupo-input">
-        <label>Descripción:</label>
-        <input type="text" name="descripcion" [(ngModel)]="nuevaArea.descripcion" required placeholder="Detalles de los equipos">
-      </div>
+    <div style="display: flex; flex-direction: column; flex: 2; gap: 5px;">
+      <label style="color: var(--texto-secundario); font-size: 0.85rem;">Descripción</label>
+      <input type="text" name="descripcion" [(ngModel)]="nuevaArea.descripcion" placeholder="Ej. Caminadoras, elípticas y bicicletas" style="background: var(--bg-principal); border: 1px solid var(--borde); padding: 10px; border-radius: 6px; color: white;">
+    </div>
 
-      <button type="submit" class="btn-guardar">
-        {{ editando ? 'Actualizar Área' : 'Registrar Área' }}
+    <div style="display: flex; gap: 10px;">
+      <button type="submit" class="btn btn-primary">
+        {{ editando ? '💾 Actualizar' : '➕ Registrar' }}
       </button>
-
-      <button type="button" class="btn-eliminar" *ngIf="editando" (click)="cancelarEdicion()" style="margin-top: 10px; width: 100%;">
-        Cancelar Edición
+      <button type="button" class="btn" style="background: #444; color: white;" *ngIf="editando" (click)="cancelarEdicion()">
+        Cancelar
       </button>
-    </form>
-  </div>
+    </div>
+  </form>
 
-  <!-- Tabla -->
-  <div class="tarjeta-tabla">
-    <h3>Áreas Existentes</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Descripción</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let area of areas">
-          <td>{{ area.id }}</td>
-          <td>{{ area.nombre }}</td>
-          <td>{{ area.descripcion }}</td>
-          <td>
-            <button class="btn-editar" (click)="cargarParaEditar(area)">Editar</button>
-            <button class="btn-eliminar" (click)="eliminarArea(area.id)">Eliminar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <!-- Tabla de Datos -->
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th style="text-align: right;">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let area of areas">
+        <td>#{{ area.id }}</td>
+        <td style="font-weight: 600; color: var(--acento);">{{ area.nombre }}</td>
+        <td style="color: var(--texto-secundario);">{{ area.descripcion || 'Sin descripción' }}</td>
+        <td style="text-align: right; display: flex; gap: 10px; justify-content: flex-end;">
+          <button class="btn" style="background: #3a3a4c; color: white; padding: 6px 12px; font-size: 0.85rem;" (click)="cargarParaEditar(area)">
+            ✏️ Editar
+          </button>
+          <button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.85rem;" (click)="eliminarArea(area.id)">
+            🗑️ Eliminar
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="areas.length === 0">
+        <td colspan="4" style="text-align: center; color: var(--texto-secundario); padding: 30px;">
+          No hay áreas registradas todavía. ¡Agrega la primera arriba!
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

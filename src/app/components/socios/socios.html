@@ -1,1 +1,63 @@
-<p>socios works!</p>
+<div class="tabla-contenedor">
+  <h2>👥 Registro Central de Socios</h2>
+  
+  <form (ngSubmit)="guardarSocio()" style="background: rgba(255,255,255,0.02); padding: 25px; border-radius: 8px; border: 1px solid var(--borde); margin-bottom: 30px;">
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 15px;">
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="color: var(--texto-secundario); font-size: 0.85rem;">Usuario (Username)</label>
+        <input type="text" name="username" [(ngModel)]="nuevoSocio.username" required placeholder="Usuario único" style="background: var(--bg-principal); border: 1px solid var(--borde); padding: 10px; border-radius: 6px; color: white;">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 5px;" *ngIf="!editando">
+        <label style="color: var(--texto-secundario); font-size: 0.85rem;">Contraseña</label>
+        <input type="password" name="password" [(ngModel)]="nuevoSocio.password" required placeholder="Blindada en Django" style="background: var(--bg-principal); border: 1px solid var(--borde); padding: 10px; border-radius: 6px; color: white;">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="color: var(--texto-secundario); font-size: 0.85rem;">Nombre(s)</label>
+        <input type="text" name="first_name" [(ngModel)]="nuevoSocio.first_name" required style="background: var(--bg-principal); border: 1px solid var(--borde); padding: 10px; border-radius: 6px; color: white;">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="color: var(--texto-secundario); font-size: 0.85rem;">Apellidos</label>
+        <input type="text" name="last_name" [(ngModel)]="nuevoSocio.last_name" required style="background: var(--bg-principal); border: 1px solid var(--borde); padding: 10px; border-radius: 6px; color: white;">
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; align-items: flex-end;">
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="color: var(--texto-secundario); font-size: 0.85rem;">Teléfono</label>
+        <input type="text" name="telefono" [(ngModel)]="nuevoSocio.telefono" style="background: var(--bg-principal); border: 1px solid var(--borde); padding: 10px; border-radius: 6px; color: white;">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="color: var(--texto-secundario); font-size: 0.85rem;">Membresía</label>
+        <select name="membresia" [(ngModel)]="nuevoSocio.membresia" required style="background: var(--bg-principal); border: 1px solid var(--borde); padding: 10px; border-radius: 6px; color: white; height: 38px;">
+          <option *ngFor="let m of membresias" [value]="m.id">{{ m.nombre }}</option>
+        </select>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="color: var(--texto-secundario); font-size: 0.85rem;">Coach Asignado</label>
+        <select name="entrenador" [(ngModel)]="nuevoSocio.entrenador" required style="background: var(--bg-principal); border: 1px solid var(--borde); padding: 10px; border-radius: 6px; color: white; height: 38px;">
+          <option *ngFor="let e of entrenadores" [value]="e.id">{{ e.nombre }}</option>
+        </select>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button type="submit" class="btn btn-primary" style="width: 100%;">{{ editando ? '💾 Actualizar' : '➕ Dar de Alta' }}</button>
+        <button type="button" class="btn" style="background: #444; color: white;" *ngIf="editando" (click)="cancelarEdicion()">❌</button>
+      </div>
+    </div>
+  </form>
+
+  <table>
+    <thead><tr><th>Username</th><th>Nombre Completo</th><th>Membresía</th><th>Coach ID</th><th style="text-align: right;">Acciones</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let s of socios">
+        <td style="font-weight: 600; color: var(--acento);">@{{ s.username }}</td>
+        <td>{{ s.first_name }} {{ s.last_name }}</td>
+        <td>ID Membresía: {{ s.membresia }}</td>
+        <td>{{ s.entrenador ? '#' + s.entrenador : 'Sin Coach' }}</td>
+        <td style="text-align: right; display: flex; gap: 10px; justify-content: flex-end;">
+          <button class="btn" style="background: #3a3a4c; color: white; padding: 6px 12px;" (click)="cargarParaEditar(s)">✏️ Editar</button>
+          <button class="btn btn-danger" style="padding: 6px 12px;" (click)="eliminarSocio(s.id)">🗑️</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
